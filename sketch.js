@@ -158,7 +158,7 @@ function draw() {
     barDecay = false;
     image(concentratedFace, 125, 300, 200, 200)
     let timePassed = Math.floor((Date.now() - startTime) / 1000); 
-    if (timePassed % 1 == 0 && timePassed != lastPassed) {
+    if (timePassed % 60 == 0 && timePassed != lastPassed) {
       coins++;
       lastPassed = timePassed;
     }
