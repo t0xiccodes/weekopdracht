@@ -3,6 +3,7 @@ let m_Timer = 1500;
 let coins = 0;
 let addCoin = 0;
 let lastPassed = 0;
+
 let backgroundImage; 
 let sadFace;
 let happyFace;
@@ -12,7 +13,7 @@ let concentratedFace;
 let barWidth;
 let barHeight = 50;
 let barDecay = true;
-
+// preload alle afbeeldingen en de opgeslagen coins
 function preload() {
   backgroundImage = loadImage('assets/bg.JPG'); 
   sadFace = loadImage('assets/sad.jpg');
@@ -28,7 +29,7 @@ function setup() {
   createCanvas(900, 800);
   frameRate(5)
   barWidth = 400;
-  
+  // alle buttons
   let startButton = createButton('Start!');
   startButton.position(500, 500);
   startButton.size(100, 100)
@@ -71,7 +72,7 @@ function setup() {
   shopItem4.position(180, 750)
   shopItem4.mousePressed(toy);
 }
-
+// functies voor de timer
 function addTime25m() {
   m_Timer += 1500;
 }
@@ -97,7 +98,7 @@ function stopTimer() {
   timerOn = false;
   barDecay = true;
 }
-
+// functies voor de shop
 function candy(){
   if (coins >= 2 && barWidth < 400){
     coins -= 2
@@ -120,9 +121,9 @@ function pizza(){
 }
 
 function toy(){
-  if (coins >= 8 && barWidth < 400){
-    coins -= 8
-    barWidth += 240
+  if (coins >= 10 && barWidth < 400){
+    coins -= 10
+    barWidth += 300
   }
 }
 
@@ -131,11 +132,11 @@ function draw() {
   background(backgroundImage);
 
   line(450, 0, 450, 800);
-
+  //zorgt dat de happiness bar lager wordt na mate van tijd
   if (barWidth > 0 && barDecay == true && timerOn == false) {
     barWidth -= 0.1;
   }
-
+    // zorgt voor de gezichtjes bij elk blijheids niveau
   if (barWidth > 300){
     image(happyFace, 125, 300, 200, 200);
   }
@@ -145,14 +146,16 @@ function draw() {
   if (barWidth < 100){
     image(sadFace, 125, 300, 200, 200);
   }
-  
+  // tekent de bar
   fill(0, 150, 255);
   rect(160, height / 4 - barHeight / 2, barWidth / 3, barHeight);
-
+  // formule voor min en sec
   let min = floor(m_Timer / 60);
   let sec = m_Timer - (min * 60);
 
-
+  // als de timer aan staat tikt de timer af met min en sec dan staat de happiness bar uit en krijgt hij een geconcentreerd gezicht. 
+  // en je krijgt per 1 min 1 coin die je kan gebruiken bij de shop
+  // coins worden hier ook opgeslagen in de cache
   if (timerOn == true && m_Timer > 1) {
     m_Timer -= deltaTime / 1000;
     barDecay = false;
@@ -166,14 +169,15 @@ function draw() {
   }
 
 
-
+    // tekenkt de timer op het scherm
   textSize(25);
   fill(255)
   text(min + ":" + (floor(sec).toString().padStart(2, '0')), 600, 345);
-
+  // als de timer kleiner is dan 1 stopt hij
   if (m_Timer < 1) {
     timerOn = false;
   }
+  // tekenkt de coins op het scherm
   fill(255)
   textSize(25);
   text(coins, 650, 150);
