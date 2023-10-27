@@ -1,6 +1,6 @@
 let timerOn = false;
 let m_Timer = 1500;
-let coins = 0
+let coins = 0;
 let addCoin = 0;
 let lastPassed = 0;
 let backgroundImage; 
@@ -19,6 +19,8 @@ function preload() {
   happyFace = loadImage('assets/happy.jpg')
   neutralFace = loadImage('assets/neutral.jpg');
   concentratedFace = loadImage('assets/concentrated.jpg');
+
+  if (getItem('coins')) coins = getItem('coins')
 }
 
 
@@ -26,6 +28,7 @@ function setup() {
   createCanvas(900, 800);
   frameRate(5)
   barWidth = 400;
+  
   let startButton = createButton('Start!');
   startButton.position(500, 500);
   startButton.size(100, 100)
@@ -155,10 +158,11 @@ function draw() {
     barDecay = false;
     image(concentratedFace, 125, 300, 200, 200)
     let timePassed = Math.floor((Date.now() - startTime) / 1000); 
-    if (timePassed % 60 == 0 && timePassed != lastPassed) {
+    if (timePassed % 1 == 0 && timePassed != lastPassed) {
       coins++;
       lastPassed = timePassed;
     }
+    storeItem('coins', coins)
   }
 
 
